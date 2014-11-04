@@ -49,8 +49,6 @@ function Write-Header ($Title)
     Write-Host
 } # end Write-Header
 
-
-
 function ConvertTo-Base ($String)
 {
     $Base64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
