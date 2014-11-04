@@ -77,5 +77,5 @@ elseif ($String)
 else
 {
     Write-Host 'No input received!'    
-}
+} # end else
 Write-Host
