@@ -26,14 +26,15 @@
 #>
 
 [CmdletBinding()]
-param(
-    [parameter(Mandatory=$false)]
-    [string]
-    $Base64,
-    
-    [parameter(Mandatory=$false)]
-    [string]
-    $String
+Param
+    (
+        [parameter(Mandatory=$false)]
+        [string]
+        $Base64,
+        
+        [parameter(Mandatory=$false)]
+        [string]
+        $String
     )
 
 function Write-Header ($Title)
