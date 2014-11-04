@@ -12,10 +12,12 @@
 [CmdletBinding()]
 param(
     [parameter(Mandatory=$false)]
-    [string]$Base64,
+    [string]
+    $Base64,
     
     [parameter(Mandatory=$false)]
-    [string]$String
+    [string]
+    $String
     )
 
 function Write-Header
