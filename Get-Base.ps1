@@ -20,9 +20,8 @@ param(
     $String
     )
 
-function Write-Header
+function Write-Header ($Title)
 {
-    param ($Title)
     $Gap = '  '
     $Title = $Gap + $Title + $Gap
     $Open = '['
@@ -36,16 +35,14 @@ function Write-Header
 
 
 
-function ConvertTo-Base
+function ConvertTo-Base ($String)
 {
-    param ($String)
     $Base64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
     $Base64
 } # end ConvertTo-Base
 
-function ConvertFrom-Base
+function ConvertFrom-Base ($Base64)
 {
-    param ($Base64)
     $String = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))
     $String
 } # end ConvertFrom-Base
