@@ -13,6 +13,7 @@
 param(
     [parameter(Mandatory=$false)]
     [string]$Base64,
+    
     [parameter(Mandatory=$false)]
     [string]$String
     )
@@ -58,4 +59,9 @@ elseif ($String)
 {
     Write-Host $String '>>>' $(ConvertTo-Base($String))
 } # end elseif
+
+else
+{
+    Write-Host 'No input received!'    
+}
 Write-Host
