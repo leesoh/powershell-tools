@@ -31,32 +31,32 @@ Param
         [parameter(Mandatory=$false)]
         [string]
         $Base64,
-        
+
         [parameter(Mandatory=$false)]
         [string]
         $String
     )
 
-function Write-Header ($Title)
+function Write-Header($Title)
 {
     $Gap = '  '
     $Title = $Gap + $Title + $Gap
     $Open = '['
     $Spacer = '='*10
     $Close = ']'
-    
+
     Write-Host
     $Open + $Spacer + $Title + $Spacer + $Close
     Write-Host
 } # end Write-Header
 
-function ConvertTo-Base ($String)
+function ConvertTo-Base($String)
 {
     $Base64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
     $Base64
 } # end ConvertTo-Base
 
-function ConvertFrom-Base ($Base64)
+function ConvertFrom-Base($Base64)
 {
     $String = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))
     $String
@@ -76,6 +76,6 @@ elseif ($String)
 
 else
 {
-    Write-Host 'No input received!'    
+    Write-Host 'No input received!'
 } # end else
 Write-Host
