@@ -26,19 +26,17 @@
 #>
 
 [CmdletBinding()]
-Param
-    (
-        [parameter(Mandatory=$false)]
-        [string]
-        $Base64,
-        
-        [parameter(Mandatory=$false)]
-        [string]
-        $String
-    )
+param(
+    [parameter(Mandatory=$false)]
+    [string]
+    $Base64,
+    
+    [parameter(Mandatory=$false)]
+    [string]
+    $String
+)
 
-function Write-Header ($Title)
-{
+function Write-Header ($Title) {
     $Gap = '  '
     $Title = $Gap + $Title + $Gap
     $Open = '['
@@ -48,34 +46,30 @@ function Write-Header ($Title)
     Write-Host
     $Open + $Spacer + $Title + $Spacer + $Close
     Write-Host
-} # end Write-Header
+}
 
-function ConvertTo-Base ($String)
-{
+function ConvertTo-Base ($String) {
     $Base64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
     $Base64
-} # end ConvertTo-Base
+}
 
-function ConvertFrom-Base ($Base64)
-{
+function ConvertFrom-Base ($Base64) {
     $String = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))
     $String
-} # end ConvertFrom-Base
+}
 
 Write-Header('Get-Base v0.1')
 
-if ($Base64)
-{
+if ($Base64) {
     Write-Host $Base64 '>>>' $(ConvertFrom-Base($Base64))
-} # end if
+}
 
-elseif ($String)
-{
+elseif ($String) {
     Write-Host $String '>>>' $(ConvertTo-Base($String))
-} # end elseif
+}
 
-else
-{
+else {
     Write-Host 'No input received!'    
-} # end else
+}
+
 Write-Host
