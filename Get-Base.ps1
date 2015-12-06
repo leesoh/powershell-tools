@@ -26,84 +26,22 @@
 #>
 
 [CmdletBinding()]
-<<<<<<< HEAD
 param(
-    [parameter(Mandatory=$false)]
-    [string]
-    $Base64,
-    
-    [parameter(Mandatory=$false)]
-    [string]
-    $String
+    [parameter(Mandatory = $true,
+        ParameterSetName = 'Base64')]
+    [string]$Base64,
+
+    [parameter(Mandatory = $true,
+        ParameterSetName = 'String')]
+    [string]$String
 )
 
-function Write-Header ($Title) {
-=======
-Param
-    (
-        [parameter(Mandatory=$false)]
-        [string]
-        $Base64,
-
-        [parameter(Mandatory=$false)]
-        [string]
-        $String
-    )
-
-function Write-Header($Title)
-{
->>>>>>> c918bbd807d6169ded485a1e22a9c2bb7794400e
-    $Gap = '  '
-    $Title = $Gap + $Title + $Gap
-    $Open = '['
-    $Spacer = '='*10
-    $Close = ']'
-
-    Write-Host
-    $Open + $Spacer + $Title + $Spacer + $Close
-    Write-Host
-}
-
-<<<<<<< HEAD
-function ConvertTo-Base ($String) {
-=======
-function ConvertTo-Base($String)
-{
->>>>>>> c918bbd807d6169ded485a1e22a9c2bb7794400e
-    $Base64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
-    $Base64
-}
-
-<<<<<<< HEAD
-function ConvertFrom-Base ($Base64) {
-=======
-function ConvertFrom-Base($Base64)
-{
->>>>>>> c918bbd807d6169ded485a1e22a9c2bb7794400e
-    $String = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))
-    $String
-}
-
-Write-Header('Get-Base v0.1')
-
 if ($Base64) {
-    Write-Host $Base64 '>>>' $(ConvertFrom-Base($Base64))
+    $String = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))
+    Write-Host "`n" $Base64 '>>>' $String "`n"
 }
 
 elseif ($String) {
-    Write-Host $String '>>>' $(ConvertTo-Base($String))
+    $Base64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
+    Write-Host "`n" $String '>>>' $Base64 "`n"
 }
-
-<<<<<<< HEAD
-else {
-    Write-Host 'No input received!'    
-}
-
-Write-Host
-=======
-else
-{
-    Write-Host 'No input received!'
-} # end else
-Write-Host
->>>>>>> c918bbd807d6169ded485a1e22a9c2bb7794400e
