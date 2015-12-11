@@ -16,6 +16,10 @@
 
 .EXAMPLE
     .\Get-Slice.ps1 -Text "sample.txt" -StartSlice "The quick brown" -EndSlice "lazy dog"
+
+.EXAMPLE
+    .\Get-Slice.ps1 -Text "sample.txt" -StartSlice "The quick brown" -EndSlice "lazy dog" -Greedy -GreedyStart 1
+    -GreedyEnd 5
 #>
 
 
