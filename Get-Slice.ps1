@@ -35,20 +35,24 @@ param (
     [ValidateScript({Select-String $Text -Pattern $_})]
     [string]$Endslice,
 
-    [Parameter(Mandatory = $false)]
-    [switch]$Greedy
+    [Parameter(Mandatory = $false,
+        ParameterSetName = 'Greedy')]
+    [switch]$Greedy,
+
+    [Parameter(Mandatory = $false,
+        ParameterSetName = 'Greedy')]
+    [int]$GreedyStart = 1,
+
+    [Parameter(Mandatory = $false,
+        ParameterSetName = 'Greedy')]
+    [int]$GreedyEnd = 1
 )
 
-$GreedyValue = 0
-
-if($Greedy){
-    $GreedyValue = 1
-}
 #Retrieve the index for the start slice and subtract one to include
-[int]$StartIndex = (Select-String $Text -Pattern $StartSlice)[0].LineNumber - $GreedyValue
+[int]$StartIndex = (Select-String $Text -Pattern $StartSlice)[0].LineNumber + $GreedyStart
 
 #Retrieve the index for the end slice and subtract one to include
-[int]$EndIndex = (Select-String $Text -Pattern $EndSlice)[0].LineNumber - $GreedyValue
+[int]$EndIndex = (Select-String $Text -Pattern $EndSlice)[0].LineNumber - $GreedyEnd
 
 #Slice!
 $Slice = (Get-Content $Text)[$StartIndex..$EndIndex]
