@@ -3,23 +3,28 @@
     Returns a slice from a block of text.
 
 .DESCRIPTION
-    Takes two parameters: start and end pattern. Returns everything in between.
+    Takes two parameters: start and end pattern. Returns those and everything in between.
 
-.PARAMETER Text
-    Block of text to slice.
+.PARAMETER FilePath
+    Target file
 
-.PARAMETER StartSlice
+.PARAMETER StartString
     Start pattern
 
-.PARAMETER EndSlice
+.PARAMETER EndString
     End pattern
 
+.PARAMETER StartOffset
+    Offset to found start string. Defaults to -1 which includes StartString
+
+.PARAMETER EndOffset
+    Offset to found end string. Defaults to -1 which includes up to EndString
 .EXAMPLE
-    .\Get-Slice.ps1 -Text "sample.txt" -StartSlice "The quick brown" -EndSlice "lazy dog"
+    .\Get-Slice.ps1 -FilePath "sample.txt" -StartString "The quick brown" -EndString "lazy dog"
 
 .EXAMPLE
-    .\Get-Slice.ps1 -Text "sample.txt" -StartSlice "The quick brown" -EndSlice "lazy dog" -Greedy -GreedyStart 1
-    -GreedyEnd 5
+    .\Get-Slice.ps1 -FilePath "sample.txt" -StartString "The quick brown" -EndString "lazy dog" -StartOffset -2
+    -EndOffset -2
 #>
 
 
@@ -27,37 +32,30 @@
 param (
     [Parameter(Mandatory = $true,
         ValueFromPipeline = $true)]
-    [string]$Text,
+    [ValidateScript({Test-Path $_})]
+    [string]$FilePath,
 
     [Parameter(Mandatory = $true,
         ValueFromPipeline = $true)]
-    [ValidateScript({Select-String $Text -Pattern $_})]
-    [string]$StartSlice,
+    [string]$StartString,
 
     [Parameter(Mandatory = $true,
         ValueFromPipeline = $true)]
-    [ValidateScript({Select-String $Text -Pattern $_})]
-    [string]$Endslice,
+    [string]$EndString,
 
-    [Parameter(Mandatory = $false,
-        ParameterSetName = 'Greedy')]
-    [switch]$Greedy,
+    [Parameter(Mandatory = $false)]
+    [int]$StartOffset = -1,
 
-    [Parameter(Mandatory = $false,
-        ParameterSetName = 'Greedy')]
-    [int]$GreedyStart = 1,
-
-    [Parameter(Mandatory = $false,
-        ParameterSetName = 'Greedy')]
-    [int]$GreedyEnd = 1
+    [Parameter(Mandatory = $false)]
+    [int]$EndOffset = -1
 )
 
 #Retrieve the index for the start slice and subtract one to include
-[int]$StartIndex = (Select-String $Text -Pattern $StartSlice)[0].LineNumber + $GreedyStart
+$StartIndex = (Select-String -Pattern $StartString -Path $FilePath -SimpleMatch)[0].LineNumber + $StartOffset
 
 #Retrieve the index for the end slice and subtract one to include
-[int]$EndIndex = (Select-String $Text -Pattern $EndSlice)[0].LineNumber - $GreedyEnd
+$EndIndex = (Select-String -Pattern $EndString -Path $FilePath -SimpleMatch)[0].LineNumber + $EndOffset
 
 #Slice!
-$Slice = (Get-Content $Text)[$StartIndex..$EndIndex]
+$Slice = (Get-Content $FilePath)[$StartIndex..$EndIndex]
 $Slice
