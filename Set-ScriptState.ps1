@@ -11,6 +11,9 @@
 .PARAMETER Value
     Value for the stored parameter (1, 2, DC01, etc.)
 
+.PARAMETER StateFile
+    Location of the script statefile. Script expects CSV format.
+
 .EXAMPLE
     .\Set-ScriptState -Name State -Value 1
 #>
