@@ -17,3 +17,15 @@ Grab a slice of text from target file.
 ```
 Get-Slice.ps1 -Text "sample.txt" -StartSlice "The quick brown" -EndSlice "lazy dog"
 ```
+
+##Set-ScriptState & Get-ScriptState
+Used to store persistent script states between program execution. Will store parameters and values in a CSV in the script's directory. Set will set, Get will get. Huh.
+```
+Set-ScriptState -Name 'ExecutionState' -Value '1'
+
+Get-ScriptState -StateFile '.\scriptstate.csv'
+
+ExecutionState
+--------------
+1
+```
