@@ -31,16 +31,16 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory = $true,
-        ValueFromPipeline = $true)]
+               ValueFromPipeline = $true)]
     [ValidateScript({Test-Path $_})]
     [string]$FilePath,
 
     [Parameter(Mandatory = $true,
-        ValueFromPipeline = $true)]
+               ValueFromPipeline = $true)]
     [string]$StartString,
 
     [Parameter(Mandatory = $true,
-        ValueFromPipeline = $true)]
+               ValueFromPipeline = $true)]
     [string]$EndString,
 
     [Parameter(Mandatory = $false)]
