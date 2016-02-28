@@ -35,5 +35,9 @@ Param (
 
 # Need to get multi-line working
 [regex]$Pattern = "(?<=$Start).*?(?=$End)"
+
+# Store matches in Pattern
 $Results = Select-String -Path $Path -Pattern $Pattern
+
+# Return the value of the first match
 $Results.Matches[0].Value
