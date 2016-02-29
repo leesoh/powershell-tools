@@ -37,6 +37,13 @@ Returns the text between two strings.
 Get-Substring -Start 'The quick' -End 'lazy dog' -Path C:\StoryAboutAFox.txt
 ```
 
+##Remove-Files.ps1
+Removes files older than n days. Defaults to C:\Users\<your username>\Downloads and 30 days
+
+```
+Remove-Files -Path C:\Path\To\Files -MaxAge 60
+```
+
 ##Test-Port.ps1
 Checks for open port and returns $True if open.
 
