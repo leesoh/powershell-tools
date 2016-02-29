@@ -38,7 +38,7 @@ Get-Substring -Start 'The quick' -End 'lazy dog' -Path C:\StoryAboutAFox.txt
 ```
 
 ##Remove-Files.ps1
-Removes files older than n days. Defaults to C:\Users\<your username>\Downloads and 30 days
+Removes files older than n days. Defaults to C:\Users\<YOU>\Downloads and 30 days
 
 ```
 Remove-Files -Path C:\Path\To\Files -MaxAge 60
