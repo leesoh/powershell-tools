@@ -36,7 +36,6 @@ Begin {
 Process {
     foreach ($File in $Files) {
         if ($PSCmdlet.ShouldProcess($File)) {
-            Write-Verbose "Deleting $File"
             Remove-Item $File.FullName -Verbose
         }
     }
