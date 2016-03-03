@@ -11,6 +11,13 @@ Get-Base -String 'Hello World!' >>> SGVsbG8gV29ybGQh
 Get-Base -Base64 'SGVsbG8gV29ybGQh' >>> Hello World!
 ```
 
+##Get-Netstat
+Parses saved Netstat output (supports any/all of -a, -n, -o) and returns an object.
+
+```
+Get-Netstat -Path C:\Path\To\File(s)
+```
+
 ##Get-ScriptState & Set-ScriptState
 Used to store persistent script states between program execution. Will store parameters and values in a CSV in the script's directory. Set will set, Get will get. Huh.
 ```
