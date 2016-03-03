@@ -9,7 +9,7 @@
     Path to file(s)
 
 .EXAMPLE
-    Get-Netstat.ps1 -Path C:\Path\To\Files
+    Import-Netstat.ps1 -Path C:\Path\To\Files
 #>
 
 [CmdletBinding()]
