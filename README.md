@@ -31,10 +31,10 @@ ExecutionState
 ```
 
 ##Get-Slice.ps1
-Grab a slice of text from target file.
+Grab a slice of text from target file. Ideally this merges with Get-Substring.
 
 ```
-Get-Slice.ps1 -Text "sample.txt" -StartSlice "The quick brown" -EndSlice "lazy dog"
+Get-Slice.ps1 -Text "sample.txt" -Start "The quick brown" -End "lazy dog"
 ```
 
 ##Get-Substring.ps1
