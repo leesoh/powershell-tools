@@ -8,28 +8,29 @@
 .PARAMETER Path
     Target file
 
-.PARAMETER StartString
+.PARAMETER Start
     Start pattern
 
-.PARAMETER EndString
+.PARAMETER End
     End pattern
 
 .PARAMETER StartOffset
-    Offset to found start string. Defaults to -1 which includes StartString
+    Offset to found start string. Defaults to -1 which includes Start
 
 .PARAMETER EndOffset
-    Offset to found end string. Defaults to -1 which includes up to EndString
-.EXAMPLE
-    .\Get-Slice.ps1 -Path "sample.txt" -StartString "The quick brown" -EndString "lazy dog"
+    Offset to found end string. Defaults to -1 which includes up to End
 
 .EXAMPLE
-    .\Get-Slice.ps1 -Path "sample.txt" -StartString "The quick brown" -EndString "lazy dog" -StartOffset -2
+    .\Get-Slice.ps1 -Path "sample.txt" -Start "The quick brown" -End "lazy dog"
+
+.EXAMPLE
+    .\Get-Slice.ps1 -Path "sample.txt" -Start "The quick brown" -End "lazy dog" -StartOffset -2
     -EndOffset -2
 #>
 
-
 [CmdletBinding()]
-param (
+
+Param (
     [Parameter(Mandatory = $true,
                ValueFromPipeline = $true)]
     [ValidateScript({Test-Path $_})]
@@ -37,11 +38,11 @@ param (
 
     [Parameter(Mandatory = $true,
                ValueFromPipeline = $true)]
-    [string]$StartString,
+    [string]$Start,
 
     [Parameter(Mandatory = $true,
                ValueFromPipeline = $true)]
-    [string]$EndString,
+    [string]$End,
 
     [Parameter(Mandatory = $false)]
     [int]$StartOffset = 0,
@@ -51,10 +52,10 @@ param (
 )
 
 #Retrieve the index for the start slice and subtract one to include
-$StartIndex = (Select-String -Pattern $StartString -Path $Path -SimpleMatch)[0].LineNumber + $StartOffset
+$StartIndex = (Select-String -Pattern $Start -Path $Path -SimpleMatch)[0].LineNumber + $StartOffset
 
 #Retrieve the index for the end slice and subtract one to include
-$EndIndex = (Select-String -Pattern $EndString -Path $Path -SimpleMatch)[0].LineNumber + $EndOffset
+$EndIndex = (Select-String -Pattern $End -Path $Path -SimpleMatch)[0].LineNumber + $EndOffset
 
 #Slice!
 $Slice = (Get-Content $Path)[$StartIndex..$EndIndex]
