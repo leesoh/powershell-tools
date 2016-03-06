@@ -36,7 +36,7 @@ Begin {
 Process {
     foreach ($File in $Files) {
         if ($PSCmdlet.ShouldProcess($File)) {
-            Remove-Item $File.FullName -Verbose
+            Remove-Item $File.FullName -Verbose -Force
         }
     }
 }
