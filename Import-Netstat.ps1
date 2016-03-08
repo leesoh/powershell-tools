@@ -39,7 +39,7 @@ foreach ($File in $Files) {
         $Connection = $Connection.Trim()
         $ConnectionArray = $Connection -split ' +'
 
-        # Links the header array with the appropriate connection array
+        # Links the header array with the appropriate connection array. Also remove spaces, because we like that.
         for ($i = 0; $i -lt $HeaderArray.Length; $i++) {
             Add-Member -InputObject $ConnObject -MemberType NoteProperty -Name $($HeaderArray[$i].Replace(' ', '')) -Value $ConnectionArray[$i]
         }
