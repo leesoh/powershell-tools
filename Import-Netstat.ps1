@@ -24,6 +24,7 @@ Param (
 $Results = @()
 $Files = Get-ChildItem -Path $Path -Recurse -File
 
+$sw = [System.Diagnostics.Stopwatch]::startNew()
 foreach ($File in $Files) {
     $FileData = Get-Content -Path $File
     $Header = $FileData[3]
@@ -40,9 +41,11 @@ foreach ($File in $Files) {
 
         # Links the header array with the appropriate connection array
         for ($i = 0; $i -lt $HeaderArray.Length; $i++) {
-            Add-Member -InputObject $ConnObject -MemberType NoteProperty -Name $HeaderArray[$i] -Value $ConnectionArray[$i]
+            Add-Member -InputObject $ConnObject -MemberType NoteProperty -Name $($HeaderArray[$i].Replace(' ', '')) -Value $ConnectionArray[$i]
         }
         $Results += $ConnObject
     }
 }
 $Results
+$sw.stop()
+$($sw.Elapsed.TotalSeconds)
