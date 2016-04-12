@@ -19,29 +19,38 @@ Param (
     $Path
 )
 
-$Results = @()
-# Need to do this instead of default values since we're processing it differently.
-if ($Path) {
-    Write-Verbose -Message 'Path specified. Getting file list.'
-    $Path = Get-ChildItem -Path $Path -Directory -Recurse | % {$_.FullName}
-}
-else {
-    Write-Verbose -Message 'Path not specified, using $env:Path'
-    $Path = ($env:Path).Split(';')
+begin {
+    $Results = @()
 }
 
-foreach ($P in $Path) {
-    $TestFileName = Get-Random
-    Write-Verbose -Message "Now processing $P. Test file is $TestFileName."
-    try {
-        New-Item -Path $P -Name $TestFileName -ErrorAction Stop | Out-Null
-        Remove-Item -Path "$P\$TestFileName"
-        $Results += [pscustomobject]@{Path   = $P
-                                      Status = 'Success'}
+process {
+    # Need to do this instead of default values since we're processing it differently.
+    if ($Path) {
+        Write-Verbose -Message 'Path specified. Getting file list.'
+        $Path = Get-ChildItem -Path $Path -Directory -Recurse | % {$_.FullName}
     }
-    catch {
-        $Results += [pscustomobject]@{Path   = $P
-                                      Status = 'Failed'}
+    else {
+        Write-Verbose -Message 'Path not specified, using $env:Path'
+        $Path = ($env:Path).Split(';')
     }
+
+    foreach ($P in $Path) {
+        $TestFileName = Get-Random
+        Write-Verbose -Message "Now processing $P. Test file is $TestFileName."
+        try {
+            New-Item -Path $P -Name $TestFileName -ErrorAction Stop | Out-Null
+            Remove-Item -Path "$P\$TestFileName"
+            $Results += [pscustomobject]@{Path   = $P
+                                        Status = 'Success'}
+        }
+        catch {
+            $Results += [pscustomobject]@{Path   = $P
+                                        Status = 'Failed'}
+        }
+    }
+
 }
-$Results
+
+end {
+    $Results
+}
