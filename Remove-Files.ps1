@@ -38,7 +38,7 @@ begin {
 process {
     foreach ($File in $Files) {
         if ($PSCmdlet.ShouldProcess($File)) {
-            Remove-Item $File.FullName -Verbose -Force
+            Remove-Item $File.FullName -Verbose -Force -Recurse
         }
     }
 }
