@@ -20,7 +20,7 @@
 [CmdletBinding()]
 
 Param (
-    [Parameter(Mandatory = $True)]
+    #[Parameter(Mandatory = $True)]
     [ValidateScript({Test-Path -Path $_})]
     [string]
     $Path,
@@ -32,38 +32,18 @@ Param (
     $Files = 5
 )
 
-function New-Subfolders {
-    param(
-        [Parameter(Mandatory = $True)]
-        #[ValidateScript({Test-Path -Path $_})]
-        [string]
-        $Path,
-        [Parameter(Mandatory = $True)]
-        [string[]]
-        $FolderNames,
-        [Parameter(Mandatory = $True)]
-        [int]
-        $Width
+function New-Folders {
+    param (
+        $Depth
     )
-
-    for ($i = 0; $i -lt $Width; $i++) {
-        $Folder = Get-Random -InputObject $FolderNames
-        New-Item -Path $Path -Name $Folder -ItemType Directory
-        $FolderNames = $FolderNames | Where-Object {$_ -ne $Folder}
+    # Work through this, decrementing depth each time. When $Depth is 0, Break
+    while ($Depth -ge 0) {
+        Write-Host "Now at $Depth"
+        $Depth--
+        # Call New-Folders with newly-reduced $Depth
+        New-Folders -Depth $Depth
     }
+    Break
 }
 
-$ShareName = 'MyShare'
-$SharePath = "$Path\$ShareName"
-$FolderNames = @('Pictures', 'Reports', 'Logs', 'Data', 'Text Files', 'Databases', 'Reviews')
-$FileNames = @('passwords', 'users', 'test')
-
-New-Item -Path $Path -Name $ShareName -ItemType Directory
-
-New-Subfolders -Path $ShareName -FolderNames $FolderNames -Width $Width
-
-$FolderArray = Get-ChildItem -Path $SharePath
-
-foreach ($f in $FolderArray) {
-    New-Subfolders -Path "$SharePath\$f" -Width $Width -FolderNames $FolderNames
-}
+New-Folders -Depth 5
