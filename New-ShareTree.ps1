@@ -23,27 +23,55 @@ Param (
     #[Parameter(Mandatory = $True)]
     [ValidateScript({Test-Path -Path $_})]
     [string]
-    $Path,
+    $Path = 'C:\Users\liam\Downloads',
     [int]
-    $Depth = 3,
+    # Add range checking (between 1 and ?)
+    $Depth = 2,
     [int]
     $Width = 5,
     [int]
     $Files = 5
 )
 
-function New-Folders {
+function New-WideFolders {
     param (
-        $Depth
+        $Path,
+        $FolderNames
     )
-    # Work through this, decrementing depth each time. When $Depth is 0, Break
-    while ($Depth -ge 0) {
-        Write-Host "Now at $Depth"
-        $Depth--
-        # Call New-Folders with newly-reduced $Depth
-        New-Folders -Depth $Depth
+    # Create as many folders at this level as are required by $Width
+    $AvailableFolders = $FolderNames
+    for ($i = 0; $i -lt $Width; $i++) {
+        $Folder = Get-Random -InputObject $AvailableFolders
+        $AvailableFolders = $AvailableFolders | Where-Object {$_ -ne $Folder}
+        Write-Host "Now creating $Folder in $Path"
+        New-Item -Path $Path -ItemType Directory -Name $Folder
     }
-    Break
 }
 
-New-Folders -Depth 5
+function New-Folders {
+    param (
+        $Depth,
+        $FolderNames,
+        $Path
+    )
+    New-WideFolders -Path $Path -FolderNames $FolderNames
+
+    if ($Depth -gt 0) {
+        $Depth--
+        $CurrentFolders = Get-ChildItem -Path $Path
+        foreach ($c in $CurrentFolders) {
+            New-Folders -Depth $Depth -FolderNames $FolderNames -Path "$Path\$c"
+        }
+    }
+
+}
+
+$ShareName = 'MyShare'
+$SharePath = "$Path\$ShareName"
+$FolderNames = @('Data', 'Logs', 'Reports', 'Files', 'Pictures', 'Scans')
+$FileNames = @('first_try', 'pancakes', '2016-Financials', 'Ergo', 'Wingnuts', 'scan')
+
+New-Item -Path $Path -Type Directory -Name $ShareName
+
+New-Folders -Depth $Depth -FolderNames $FolderNames -Path $SharePath
+
