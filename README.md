@@ -18,6 +18,13 @@ Parses saved Netstat output (supports any/all of -a, -n, -o) and returns an obje
 Import-Netstat -Path C:\Path\To\File(s)
 ```
 
+##Import-IPConfig
+Parses text files containing output of ipconfig or ipconfig /all and returns an object.
+
+```
+Import-IPConfig -Path C:\Path\To\File(s)
+```
+
 ##Get-ScriptState & Set-ScriptState
 Used to store persistent script states between program execution. Will store parameters and values in a CSV in the script's directory. Set will set, Get will get. Huh.
 ```

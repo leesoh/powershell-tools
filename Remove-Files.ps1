@@ -20,27 +20,29 @@
 Param (
     # Maximum file age, in days.
     [Parameter(Mandatory = $False)]
-    [int]$MaxAge = 30,
+    [int]
+    $MaxAge = 30,
 
     # Target path.
     [Parameter(Mandatory = $False)]
-    [string]$Path = "C:\Users\$([Environment]::Username)\Downloads"
+    [string]
+    $Path = "C:\Users\$([Environment]::Username)\Downloads"
 )
 
-Begin {
+begin {
     $Now = Get-Date
     $LastWrite = $Now.AddDays(-$MaxAge)
     $Files = Get-ChildItem -Path $Path -Recurse | Where {$_.LastWriteTime -le $LastWrite}
 }
 
-Process {
+process {
     foreach ($File in $Files) {
         if ($PSCmdlet.ShouldProcess($File)) {
-            Remove-Item $File.FullName -Verbose -Force
+            Remove-Item $File.FullName -Verbose -Force -Recurse
         }
     }
 }
 
-End {
-    Write-Verbose 'Delete complete!'
+end {
+    Write-Verbose -Message 'Delete complete!'
 }
