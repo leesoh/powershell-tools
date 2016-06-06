@@ -25,34 +25,34 @@
 .EXAMPLE
     Get-Base -Base64 'SGVsbG8gV29ybGQh'
 
-.NOTES
-    Author: Liam Somerville
 #>
 
 [CmdletBinding()]
 
-Param (
+param (
     [Parameter(Mandatory = $True,
                ParameterSetName = 'Base64')]
-    [string]$Base64,
+    [string]
+    $Base64,
 
     [Parameter(Mandatory = $True,
                ParameterSetName = 'String')]
-    [string]$String
+    [string]
+    $String
 )
 
-Begin {}
+begin {}
 
-Process {
+process {
     if ($Base64) {
-        $Result = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))
+        $Result = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($Base64))
     }
 
     elseif ($String) {
-        $Result = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
+        $Result = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($String))
     }
 }
 
-End {
+end {
     $Result
 }
