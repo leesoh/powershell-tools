@@ -1,7 +1,8 @@
 <#
 .SYNOPSIS
 Creates an LNK file with an embedded reverse tcp shell. Original code from
-http://onready.me/old_horse_attacks.html.
+http://onready.me/old_horse_attacks.html. $Command can be modified, but there's a 1023-character limit on the
+length of the Arguments parameter.
 
 .PARAMETER LHOST
 Target for the reverse shell.
