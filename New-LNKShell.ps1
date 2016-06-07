@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
 Creates an LNK file with an embedded reverse tcp shell. Original code from
-http://onready.me/old_horse_attacks.html. $Command can be modified, but there's a 1023-character limit on the
-length of the Arguments parameter.
+http://onready.me/old_horse_attacks.html. The Command parameter can be modified,
+but there's a 1023-character limit on the length of the $Shortcut.Arguments property.
 
 .PARAMETER ComputerName
 Target for the reverse shell.
@@ -11,10 +11,10 @@ Target for the reverse shell.
 Target port on ComputerName. Defaults to 4444.
 
 .PARAMETER Path
-Target for created shortcut. Defaults to current directory.
+Target for created shortcut. Defaults to script directory.
 
 .PARAMETER Output
-Target filename. Must end in lnk. Defaults to 'payload.lnk'.
+File name for shortcut. Must end in lnk. Defaults to 'payload.lnk'.
 
 .PARAMETER Application
 Application to run after launching. Will update shortcut icon to match. Defaults to none.
