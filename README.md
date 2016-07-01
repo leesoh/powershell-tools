@@ -49,8 +49,16 @@ New-LNKShell -ComputerName 192.168.1.1 -Port 4444 -Application calc.exe
 ##New-SMBLNK.ps1
 
 ```
-.\New-SBMLNK.ps1 -ComputerName 192.168.1.1 -Share Files -Application calc.exe
+.\New-SMBLNK.ps1 -ComputerName 192.168.1.1 -Share Files -Application calc.exe
 ```
+
+##Get-Files.ps1
+Loops through a folder tree and copies all matching files to a directory. Takes string, array, or file input.
+
+```
+.\Get-File.ps1 -Path 'C:\Path\To\Files' -TargetList C:\List\Of\files.txt -OutputPath C:\Path\To\Output -Verbose
+```
+
 ##Remove-Files.ps1
 Removes files older than n days. Defaults to C:\Users\<YOU>\Downloads and 30 days
 
