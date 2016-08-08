@@ -53,11 +53,11 @@
                     if ($Adapter.IPAddress){
                         Write-Verbose -Message "[+] IP is present on $AdapterName"
                         $AdapterProps = [ordered]@{
-                            'Computer' = $WMISysInfo.Name
-                            'Adapter' = $AdapterName
-                            'IPAddress' = $Adapter.IPAddress[0]
-                            'MAC' = $WMIEthInfo[$AdapterIndex].MACAddress
-                            'Subnet' = $Adapter.IPSubnet[0]
+                            'Computer'       = $WMISysInfo.Name
+                            'Adapter'        = $AdapterName
+                            'IPAddress'      = $Adapter.IPAddress[0]
+                            'MAC'            = $WMIEthInfo[$AdapterIndex].MACAddress
+                            'Subnet'         = $Adapter.IPSubnet[0]
                             'DefaultGateway' = 'N/A'
                         }
 
