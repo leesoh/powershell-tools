@@ -4,13 +4,18 @@
         Gathers network info using WMI
 
         .DESCRIPTION
-        Gathers IP Addresses, Subnet Mask, and Default Gateway for each adapter present on the target and returns
-        an array.
+        Uses WMI to gather IP addresses, subnet mask, and default gateway for each adapter present on the target.
+        Returns an array of hashtables.
+
+        .NOTES
+        Author: Liam Somerville
+        License: GNU GPLv3
 
         .PARAMETER ComputerName
         Target computer(s)
 
         .EXAMPLE
+        PS C:\> Get-NetInfo -ComputerName COMPUTER01 -Credential dmz\administrator
     #>
 
     [CmdletBinding()]
@@ -18,13 +23,15 @@
         [Parameter(Mandatory = $True,
                    ValueFromPipeLine = $True)]
         [string[]]
-        $ComputerName
+        $ComputerName,
+
+        [System.Management.Automation.PSCredential]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     begin {
         $Results = @()
         $Namespace = "root\cimv2"
-        $Credentials = Get-Credential
     }
 
     process {
@@ -38,6 +45,7 @@
 
             catch {
                 Write-Verbose -Message "[-] WMI information not available on $C"
+                Continue
             }
 
             if ($WMINetInfo) {
@@ -74,6 +82,7 @@
             }
             else {
                 Write-Verbose -Message "[-] Network Information unavailable for $C"
+                Continue
             }
         }
     }
