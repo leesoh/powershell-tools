@@ -1,29 +1,31 @@
 <#
 .SYNOPSIS
-    Creates a folder structure, populates with data, and arbitrary files.
+Creates a folder structure, populates with data, and arbitrary files.
 
 .DESCRIPTION
-    Creates a mock filesystem. Be careful as the number of folders created will increase geometrically. Default
-    settings result in 780 folders.
-
-.PARAMETER Path
-    Target for root of hierarchy.
-
-.PARAMETER Depth
-    Number of levels deep to write. Defaults to three.
-
-.PARAMETER Width
-    Number of folders to create at each level. Defaults to five.
-
-.PARAMETER FileCount
-    Number of files to create in each folder.
-
-.EXAMPLE
+Creates a mock filesystem. Be careful as the number of folders created will increase geometrically. Default
+settings result in 780 folders.
 
 .NOTES
-    To Do:
-    - Add randomness to number of files/folders at each level
-    - Add file creation
+Author: Liam Somerville
+License: GNU GPLv3
+To Do: - Add randomness to number of files/folders at each level
+       - Add file creation
+
+.PARAMETER Path
+Target for root of hierarchy.
+
+.PARAMETER Depth
+Number of levels deep to write. Defaults to three.
+
+.PARAMETER Width
+Number of folders to create at each level. Defaults to five.
+
+.PARAMETER FileCount
+Number of files to create in each folder.
+
+.EXAMPLE
+PS C:\> New-ShareTree.ps1 -Path C:\Path\To\Root -Depth 1 -Width 5 -FileCount 3
 #>
 
 [CmdletBinding()]
@@ -104,12 +106,3 @@ function New-Folders {
     }
 
 }
-
-$ShareName = 'MyShare'
-$SharePath = "$Path\$ShareName"
-$FolderNames = @('Data', 'Logs', 'Reports', 'Files', 'Pictures', 'Scans', 'Kangaroo', 'Peanut', 'Ice Cream')
-$FileNames = @('first_try', 'pancakes', '2016-Financials', 'Ergo', 'Wingnuts', 'scan')
-
-New-Item -Path $Path -Type Directory -Name $ShareName
-
-New-Folders -Depth $Depth -FolderNames $FolderNames -Path $SharePath
