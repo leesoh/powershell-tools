@@ -19,7 +19,7 @@ Name of the shortcut. Defaults to '$Application - Shortcut.lnk'.
 Where the LNK gets saved. Defaults to script directory.
 
 .EXAMPLE
-PS> .\New-SBMLNK.ps1 -ComputerName 192.168.1.1
+PS> .\New-SMBLNK.ps1 -ComputerName 192.168.1.1
 [*] Creating shortcut (192.168.1.1)
 [*] Shortcut created: C:\Path\To\Shortcut\mspaint.exe - Shortcut.lnk
 
